@@ -4,7 +4,7 @@
 
 layout: default
 ---
-# Welcome to Alex Kozlov's Website
+# Blog and Personal Website
 
 This is a minimal Jekyll site for testing the Docker development environment.
 
