@@ -1,4 +1,4 @@
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Deploy Jekyll to GitHub Pages
 
 on:
   push:
@@ -20,37 +20,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
           bundler-cache: true
-          working-directory: ./docs
-      
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-        
-      # Add cache-busting techniques:
-      - name: Clear Jekyll cache
-        run: |
-          cd docs
-          rm -rf .jekyll-cache/ _site/
-          
+
       - name: Build with Jekyll
-        run: |
-          cd docs
-          # Force rebuild with cache busting
-          bundle exec jekyll clean
-          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}" --verbose --force_polling
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
-          
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/_site
+          path: _site
 
   deploy:
     environment:
